@@ -1,8 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerControls : MonoBehaviour {
+
+    public AudioClip jump;
+    AudioSource AudioSRX;
 
 	Rigidbody2D playerRigidBody;
 	public float speed;
@@ -23,6 +27,7 @@ public class PlayerControls : MonoBehaviour {
     void Awake () {
 		playerRigidBody = GetComponent<Rigidbody2D>();
         playerAnimator = GetComponent<Animator>();
+        AudioSRX = GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -81,8 +86,19 @@ public class PlayerControls : MonoBehaviour {
 
     private void Update()
     {
+        if(Input.GetKey(KeyCode.Escape))
+        {
+            SceneManager.LoadScene("MainMenu");
+        }
         if (Input.GetKeyDown(KeyCode.Space) && canJump > 0)
         {
+            AudioSRX.clip = jump;
+
+            if(!AudioSRX.isPlaying)
+            {
+                AudioSRX.Play();
+            }
+
             playerAnimator.SetBool("Jump", true);
             playerRigidBody.velocity = Vector2.up * jumpForce;
             canJump--;

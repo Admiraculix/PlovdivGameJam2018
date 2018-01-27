@@ -6,13 +6,13 @@ public class SpinningBoltScript : MonoBehaviour {
 
     float randomTimeInterval;
     float randomSpinDegrees;
-    Rigidbody2D objectRigidBody;
+    float randomSpeed;
 
     private void Start()
     {
-        objectRigidBody = GetComponent<Rigidbody2D>();
-        randomTimeInterval = Random.Range(2.0f, 6.0f);
+        randomTimeInterval = Random.Range(2.0f, 5.0f);
         randomSpinDegrees = Random.Range(0.0f, 360.0f);
+        randomSpeed = Random.Range(30.0f, 300.0f); 
         StartCoroutine(SpinAndWait());
     }
 
@@ -20,13 +20,14 @@ public class SpinningBoltScript : MonoBehaviour {
     {
         yield return new WaitForSecondsRealtime(randomTimeInterval);
 
-        randomTimeInterval = Random.Range(2.0f, 6.0f);
+        randomTimeInterval = Random.Range(2.0f, 5.0f);
         randomSpinDegrees = Random.Range(0.0f, 360.0f);
+        randomSpeed = Random.Range(30.0f, 300.0f);
         StartCoroutine(SpinAndWait());
     }
 
     private void Update()
     {
-        objectRigidBody.MoveRotation(randomSpinDegrees);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(new Vector3(0.0f, 0.0f, randomSpinDegrees)), randomSpeed * Time.deltaTime);
     }
 }

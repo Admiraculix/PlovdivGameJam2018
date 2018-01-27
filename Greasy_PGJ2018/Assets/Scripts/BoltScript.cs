@@ -5,6 +5,17 @@ using UnityEngine;
 public class BoltScript : MonoBehaviour {
 
     public bool falls = false;
+    Quaternion rotation;
+
+    void Awake()
+    {
+        rotation = transform.rotation;
+    }
+
+    void LateUpdate()
+    {
+        transform.rotation = rotation;
+    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
