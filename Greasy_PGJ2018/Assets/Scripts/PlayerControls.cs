@@ -42,6 +42,10 @@ public class PlayerControls : MonoBehaviour {
             playerAnimator.SetBool("Walk", true);
             transform.rotation = Quaternion.Euler(new Vector3(0.0f, 0.0f, 15.796f));
             facingRight = false;
+            if (wrenchInstance != null)
+            {
+                wrenchInstance.transform.rotation = Quaternion.Euler(0.0f, 0.0f, 120.0f);
+            }
         }
         if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
         {
@@ -53,6 +57,10 @@ public class PlayerControls : MonoBehaviour {
             playerAnimator.SetBool("Walk", true);
             transform.rotation = Quaternion.Euler(new Vector3(0.0f, 0.0f, -15.796f));
             facingRight = true;
+            if (wrenchInstance != null)
+            {
+                wrenchInstance.transform.rotation = Quaternion.Euler(0.0f, 0.0f, 75.0f);
+            }
         }
         if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
         {
@@ -118,7 +126,7 @@ public class PlayerControls : MonoBehaviour {
             }
             else
             {
-                //wrenchInstance.transform.rotation = Quaternion.Euler(0.0f, 0.0f, 10.0f);
+                wrenchInstance.transform.rotation = Quaternion.Euler(0.0f, 0.0f, 120.0f);
             }
             if (Input.GetMouseButtonDown(0))
             {
