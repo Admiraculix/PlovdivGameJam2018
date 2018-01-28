@@ -2,11 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerControls : MonoBehaviour {
 
     public AudioClip jump;
+    public AudioClip bottleOil;
     AudioSource AudioSRX;
+
+    public Sprite fullOilSprite;
 
     Vector2 resetPosition = new Vector2(-13.41f, 10.8f);
 
@@ -172,6 +176,15 @@ public class PlayerControls : MonoBehaviour {
         if(collision.gameObject.tag == "Reset")
         {
             transform.position = resetPosition;
+        }
+
+        if (collision.gameObject.tag == "Bottle")
+        {
+            AudioSRX.clip = bottleOil;
+            AudioSRX.Play();
+            Destroy(collision.gameObject);
+
+            GameObject.Find("OilHUD").GetComponent<Image>().overrideSprite = fullOilSprite;
         }
     }
 }
