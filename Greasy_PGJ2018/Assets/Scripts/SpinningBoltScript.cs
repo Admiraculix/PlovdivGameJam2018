@@ -10,7 +10,7 @@ public class SpinningBoltScript : MonoBehaviour {
 
     private void Start()
     {
-        randomTimeInterval = Random.Range(2.0f, 5.0f);
+        randomTimeInterval = Random.Range(1.0f, 3.0f);
         randomSpinDegrees = Random.Range(0.0f, 360.0f);
         randomSpeed = Random.Range(30.0f, 300.0f); 
         StartCoroutine(SpinAndWait());
@@ -20,7 +20,7 @@ public class SpinningBoltScript : MonoBehaviour {
     {
         yield return new WaitForSecondsRealtime(randomTimeInterval);
 
-        randomTimeInterval = Random.Range(2.0f, 5.0f);
+        randomTimeInterval = Random.Range(1.0f, 3.0f);
         randomSpinDegrees = Random.Range(0.0f, 360.0f);
         randomSpeed = Random.Range(30.0f, 300.0f);
         StartCoroutine(SpinAndWait());

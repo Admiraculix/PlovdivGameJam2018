@@ -8,6 +8,8 @@ public class PlayerControls : MonoBehaviour {
     public AudioClip jump;
     AudioSource AudioSRX;
 
+    Vector2 resetPosition = new Vector2(-13.41f, 10.8f);
+
 	Rigidbody2D playerRigidBody;
 	public float speed;
 	public float jumpForce;
@@ -165,6 +167,11 @@ public class PlayerControls : MonoBehaviour {
         {
             canJump = 2;
             playerAnimator.SetBool("Jump", false);
+        }
+
+        if(collision.gameObject.tag == "Reset")
+        {
+            transform.position = resetPosition;
         }
     }
 }
