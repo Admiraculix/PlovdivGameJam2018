@@ -10,6 +10,11 @@ public class PlayerControls : MonoBehaviour {
     public AudioClip bottleOil;
     AudioSource AudioSRX;
 
+    GameObject leaverHandle;
+    float leaverHandleZRotationAxis = 0.0f;
+
+    bool collidingWithLeaver = false;
+
     public Sprite fullOilSprite;
 
     Vector2 resetPosition = new Vector2(-13.41f, 10.8f);
@@ -39,6 +44,7 @@ public class PlayerControls : MonoBehaviour {
     private void Start()
     {
         canJump = 2;
+        leaverHandle = GameObject.Find("Leaver").transform.Find("LeaverHandle").gameObject;
     }
 
     void FixedUpdate()
@@ -90,9 +96,26 @@ public class PlayerControls : MonoBehaviour {
         }
     }
 
+    IEnumerator ReturnLeaverToStart()
+    {
+        yield return new WaitForSecondsRealtime(3.0f);
+        leaverHandleZRotationAxis = 0.0f;
+    }
+
     private void Update()
     {
-        if(Input.GetKey(KeyCode.Escape))
+        leaverHandle.transform.rotation = Quaternion.RotateTowards(leaverHandle.transform.rotation, Quaternion.Euler(new Vector3(0.0f, 0.0f, leaverHandleZRotationAxis)), 100 * Time.deltaTime);
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (collidingWithLeaver)
+            {
+                leaverHandleZRotationAxis = 87.1f;
+                collidingWithLeaver = false;
+                StartCoroutine(ReturnLeaverToStart());
+            }
+        }
+        if (Input.GetKey(KeyCode.Escape))
         {
             SceneManager.LoadScene("MainMenu");
         }
@@ -100,7 +123,7 @@ public class PlayerControls : MonoBehaviour {
         {
             AudioSRX.clip = jump;
 
-            if(!AudioSRX.isPlaying)
+            if (!AudioSRX.isPlaying)
             {
                 AudioSRX.Play();
             }
@@ -118,7 +141,7 @@ public class PlayerControls : MonoBehaviour {
             playerAnimator.SetBool("Walk", false);
             transform.rotation = Quaternion.Euler(Vector3.zero);
         }
-        if(Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.DownArrow))
+        if ((Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.DownArrow)))
         {
             playerAnimator.SetBool("Duck", false);
             gameObject.GetComponent<CapsuleCollider2D>().offset = new Vector2(0.0273627f, -0.5083277f);
@@ -126,7 +149,8 @@ public class PlayerControls : MonoBehaviour {
             transform.Translate(Vector2.up * 2);
         }
 
-        if (Input.GetKeyDown(KeyCode.G)) {
+        if (Input.GetKeyDown(KeyCode.G))
+        {
             if (!GameObject.Find("Wrench(Clone)"))
             {
                 wrenchInstance = facingRight ? Instantiate(wrench, transform.Find("RightArm").transform) : Instantiate(wrench, transform.Find("LeftArm").transform);
@@ -142,7 +166,7 @@ public class PlayerControls : MonoBehaviour {
             wrenchInstance.transform.position = facingRight ? new Vector2(transform.Find("RightArm").transform.position.x + 0.1f, transform.Find("RightArm").transform.position.y - 0.1f) :
                                                               new Vector2(transform.Find("LeftArm").transform.position.x - 0.2f, transform.Find("LeftArm").transform.position.y - 0.2f);
             wrenchInstance.transform.rotation = facingRight ? transform.Find("RightArm").transform.rotation : transform.Find("LeftArm").transform.rotation;
-            if(facingRight)
+            if (facingRight)
             {
                 wrenchInstance.transform.rotation = Quaternion.Euler(0.0f, 0.0f, 75.0f);
             }
@@ -153,7 +177,7 @@ public class PlayerControls : MonoBehaviour {
             if (Input.GetMouseButtonDown(0))
             {
                 wrenchInstance.GetComponent<Animator>().enabled = true;
-                if(facingRight)
+                if (facingRight)
                 {
                     wrenchInstance.GetComponent<Animator>().Play("WrenchAnimation", 0, 0f);
                 }
@@ -171,6 +195,9 @@ public class PlayerControls : MonoBehaviour {
         {
             canJump = 2;
             playerAnimator.SetBool("Jump", false);
+
+            gameObject.GetComponent<CapsuleCollider2D>().offset = new Vector2(0.0273627f, -0.5083277f);
+            gameObject.GetComponent<CapsuleCollider2D>().size = new Vector2(2.225312f, 4.173103f);
         }
 
         if(collision.gameObject.tag == "Reset")
@@ -185,6 +212,21 @@ public class PlayerControls : MonoBehaviour {
             Destroy(collision.gameObject);
 
             GameObject.Find("OilHUD").GetComponent<Image>().overrideSprite = fullOilSprite;
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Leaver")
+        {
+            collidingWithLeaver = true;
+        }
+
+        if (collision.gameObject.tag == "StayCrouched")
+        {
+            playerAnimator.SetBool("Duck", true);
+            gameObject.GetComponent<CapsuleCollider2D>().offset = new Vector2(0.0273627f, 0.2736068f);
+            gameObject.GetComponent<CapsuleCollider2D>().size = new Vector2(2.225312f, 2.409235f);
         }
     }
 }

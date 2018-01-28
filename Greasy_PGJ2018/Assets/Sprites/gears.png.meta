@@ -1,12 +1,15 @@
 fileFormatVersion: 2
 guid: c5c27d694608fb943b4928e15d26e2e2
-timeCreated: 1517071796
+timeCreated: 1517140493
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
     21300000: gears_0
     21300002: gears_1
     21300004: gears_2
+    21300006: gears_3
+    21300008: gears_4
+    21300010: gears_5
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -107,7 +110,46 @@ TextureImporter:
         width: 442
         height: 503
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: gears_3
+      rect:
+        serializedVersion: 2
+        x: 1509
+        y: 1817
+        width: 426
+        height: 414
+      alignment: 9
+      pivot: {x: 0.2263645, y: 0.21843332}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: gears_4
+      rect:
+        serializedVersion: 2
+        x: 1000
+        y: 1971
+        width: 202
+        height: 172
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: gears_5
+      rect:
+        serializedVersion: 2
+        x: 1837
+        y: 1679
+        width: 433
+        height: 65
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
